@@ -1,0 +1,10 @@
+my_str = 'bhydhcdb_hello_jcdscjlk_vivian_vivian'
+print(my_str.find('hello'))
+print(my_str.replace('hello','monica'))
+name = input('请输入要查找的数据：')
+replace_name = input('请输入要替换的数据：')
+replaced_name = my_str.replace(name,replace_name,1)
+print(name)
+print(replace_name)
+print('原句：', my_str)
+print('替换后：', replaced_name)

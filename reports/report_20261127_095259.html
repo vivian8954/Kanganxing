@@ -1,0 +1,2194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title id="head-title">report_20261127_095259.html</title>
+  <style type="text/css">
+    @charset "UTF-8";
+/* ============================================================
+   pytest-xhtml — Enterprise SaaS Dashboard Style
+   Design tokens extracted from the reference dashboard:
+   soft lavender-blue background, deep-blue headings, rounded
+   12px cards, pill badges, subtle layered shadows.
+   ============================================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* brand */
+  --brand-deep: #24408c;
+  --brand-blue: #2c528e;
+  --brand-accent: #3182ce;
+
+  /* status palette (matches reference image) */
+  --c-passed: #22c55e;
+  --c-failed: #f14b66;
+  --c-error: #dc2626;
+  --c-skipped: #94a3b8;
+  --c-xfailed: #f59e0b;
+  --c-xpassed: #8b5cf6;
+  --c-rerun: #3b82f6;
+  --c-retried: #f97316;
+
+  /* neutrals */
+  --ink-900: #16213f;
+  --ink-700: #33415c;
+  --ink-500: #5b6472;
+  --ink-400: #8a93a6;
+  --line: #e4e9f2;
+  --card-bg: #ffffff;
+  --soft-bg: #f7f9fc;
+
+  /* surfaces */
+  --page-bg-a: #eef1f9;
+  --page-bg-b: #f6f4fb;
+
+  /* metrics */
+  --radius: 12px;
+  --shadow-card: 0 4px 6px -1px rgba(15, 30, 70, 0.05), 0 1px 3px rgba(15, 30, 70, 0.04);
+  --transition: all 0.25s ease;
+
+  /* legacy aliases kept for hook/custom-css compatibility */
+  --primary-color: var(--ink-900);
+  --secondary-color: var(--brand-blue);
+  --success-color: var(--c-passed);
+  --danger-color: var(--c-failed);
+  --warning-color: var(--c-xfailed);
+  --info-color: var(--c-rerun);
+  --light-color: #ecf0f1;
+  --dark-color: #34495e;
+  --text-color: var(--ink-700);
+  --border-radius: var(--radius);
+  --box-shadow: var(--shadow-card);
+  --x-primary: var(--brand-blue);
+  --x-shade-primary: #234578;
+  --x-tint-primary: #3b62a5;
+  --x-skipped: var(--c-skipped);
+  --x-success: var(--c-passed);
+  --x-danger: var(--c-failed);
+  --x-warning: var(--c-xfailed);
+  --x-info: var(--c-rerun);
+  --x-white: #fff;
+}
+
+body {
+  font-family: "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 14px;
+  color: var(--ink-700);
+  background: linear-gradient(160deg, var(--page-bg-a) 0%, var(--page-bg-b) 45%, #eef3fa 100%);
+  background-attachment: fixed;
+  line-height: 1.6;
+  min-width: 1000px;
+}
+
+/* ================= HERO HEADER ================= */
+.report-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 44px 48px 30px;
+  background:
+    radial-gradient(900px 320px at 8% -40%, rgba(120, 140, 230, 0.28), transparent 70%),
+    radial-gradient(700px 260px at 78% -60%, rgba(180, 160, 240, 0.25), transparent 70%),
+    linear-gradient(135deg, #f3f5fd 0%, #f7f5fb 100%);
+  border-bottom: 1px solid var(--line);
+}
+
+/* decorative arcs echoing the reference screenshot */
+.report-hero::before,
+.report-hero::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(60, 90, 180, 0.10);
+  pointer-events: none;
+}
+
+.report-hero::before {
+  width: 760px;
+  height: 760px;
+  right: -240px;
+  top: -460px;
+}
+
+.report-hero::after {
+  width: 980px;
+  height: 980px;
+  right: -320px;
+  top: -600px;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.hero-eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  color: var(--brand-blue);
+  margin-bottom: 6px;
+}
+
+.hero-text h1,
+h1#title {
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--brand-deep);
+  letter-spacing: -0.5px;
+  line-height: 1.25;
+  word-break: break-all;
+}
+
+.hero-sub {
+  margin-top: 8px;
+  font-size: 15px;
+  color: var(--ink-500);
+}
+
+/* executed progress ring */
+.hero-ring {
+  position: relative;
+  width: 128px;
+  height: 128px;
+  flex-shrink: 0;
+}
+
+.hero-ring svg {
+  width: 100%;
+  height: 100%;
+}
+
+.hero-ring-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.ring-pct {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--ink-900);
+}
+
+.ring-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--ink-400);
+}
+
+.summary__reload__button {
+  display: inline-block;
+  margin-top: 12px;
+  background-color: var(--c-xfailed);
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.summary__reload__button:hover {
+  filter: brightness(1.08);
+}
+
+/* ================= LAYOUT ================= */
+.body {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 48px 56px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ================= ATTENTION BANNER ================= */
+.attention-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #fff3f3;
+  border: 1px solid #ffd9d9;
+  border-left: 4px solid var(--c-failed);
+  border-radius: var(--radius);
+  padding: 13px 18px;
+  margin: 0 0 20px;
+  box-shadow: var(--shadow-card);
+}
+
+.attention-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--c-failed);
+  flex-shrink: 0;
+}
+
+.attention-title {
+  font-weight: 700;
+  color: var(--ink-900);
+}
+
+.attention-text {
+  color: var(--ink-500);
+}
+
+/* ================= CARDS ================= */
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  margin-bottom: 20px;
+  word-wrap: break-word;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.card-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  background-color: transparent;
+  border-bottom: 1px solid #eef1f7;
+  padding: 16px 24px;
+}
+
+.card-header h2,
+h2 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink-900);
+}
+
+.card-hint {
+  font-size: 12px;
+  color: var(--ink-400);
+  white-space: nowrap;
+}
+
+.card-body {
+  color: var(--ink-700);
+  flex: 1 1 auto;
+  padding: 20px 24px;
+}
+
+.flex-fill {
+  flex: 1 1 auto !important;
+}
+
+/* ================= PLAN OVERVIEW ================= */
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.overview-item {
+  padding: 4px 0;
+}
+
+.overview-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--ink-400);
+  margin-bottom: 4px;
+}
+
+.overview-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--ink-900);
+  line-height: 1.3;
+}
+
+.overview-value--sm {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.environment-block {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--line);
+}
+
+.env-title {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--ink-400);
+  margin-bottom: 10px;
+}
+
+.env-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 8px 24px;
+}
+
+.env-item {
+  display: flex;
+  gap: 8px;
+  font-size: 13px;
+  padding: 4px 0;
+  border-bottom: 1px solid #f1f4f9;
+}
+
+.env-key {
+  color: var(--ink-500);
+  min-width: 120px;
+  flex-shrink: 0;
+}
+
+.env-val {
+  color: var(--ink-900);
+  font-weight: 500;
+  word-break: break-all;
+}
+
+/* mapping-style entries (Packages / Plugins): full-width chip layout */
+.env-item--chips {
+  grid-column: 1 / -1;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.env-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.env-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  padding: 2px 10px;
+  border-radius: 14px;
+  background: #eef3fc;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--brand-blue);
+  white-space: nowrap;
+}
+
+.env-chip__ver {
+  color: var(--ink-400);
+  font-weight: 500;
+}
+
+/* ================= EXECUTION SUMMARY METRIC CARDS ================= */
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.metric-card {
+  background: var(--soft-bg);
+  border: 1px solid #e8edf5;
+  border-radius: 10px;
+  padding: 14px 10px;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card);
+}
+
+.metric-icon {
+  width: 34px;
+  height: 34px;
+  margin: 0 auto 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.metric-value {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--ink-900);
+  line-height: 1.2;
+}
+
+.metric-label {
+  margin-top: 2px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: var(--ink-700);
+}
+
+.metric-hint {
+  margin-top: 3px;
+  font-size: 11px;
+  color: var(--ink-400);
+}
+
+.metric-card--passed .metric-value { color: var(--c-passed); }
+.metric-card--failed .metric-value { color: var(--c-failed); }
+.metric-card--error .metric-value { color: var(--c-error); }
+.metric-card--skipped .metric-value { color: var(--c-skipped); }
+.metric-card--xfailed .metric-value { color: var(--c-xfailed); }
+.metric-card--xpassed .metric-value { color: var(--c-xpassed); }
+.metric-card--rerun .metric-value { color: var(--c-rerun); }
+.metric-card--retried .metric-value { color: var(--c-retried); }
+
+/* ================= CHARTS ================= */
+.charts-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.charts-row .card {
+  margin-bottom: 20px;
+}
+
+.chart-body {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.chart-body--column {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 22px;
+  justify-content: center;
+}
+
+/* donut */
+.donut {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  flex-shrink: 0;
+  margin: 0 auto;
+}
+
+.donut svg {
+  width: 100%;
+  height: 100%;
+}
+
+.donut-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.donut-total {
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--ink-900);
+}
+
+.donut-caption {
+  font-size: 12px;
+  color: var(--ink-400);
+}
+
+/* legend */
+.legend {
+  list-style: none;
+  flex: 1;
+  min-width: 180px;
+}
+
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 14px;
+  color: var(--ink-700);
+  border-bottom: 1px solid #f3f5fa;
+}
+
+.legend li:last-child {
+  border-bottom: none;
+}
+
+.legend-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-name {
+  flex: 1;
+}
+
+.legend-count {
+  font-weight: 700;
+  color: var(--ink-900);
+}
+
+/* stacked bar + rates */
+.stacked-bar {
+  display: flex;
+  width: 100%;
+  height: 22px;
+  border-radius: 11px;
+  overflow: hidden;
+  background: #edf1f7;
+}
+
+.stacked-seg {
+  height: 100%;
+  min-width: 2px;
+  transition: var(--transition);
+}
+
+.rate-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.rate-block {
+  background: var(--soft-bg);
+  border: 1px solid #e8edf5;
+  border-radius: 10px;
+  padding: 14px 12px;
+  text-align: center;
+}
+
+.rate-big {
+  display: block;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.rate-big--passed { color: var(--c-passed); }
+.rate-big--failed { color: var(--c-failed); }
+.rate-big--skipped { color: var(--c-skipped); }
+
+.rate-desc {
+  font-size: 12px;
+  color: var(--ink-400);
+}
+
+/* ================= RESULTS TABLE ================= */
+.summary__spacer {
+  padding: 0 24px;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  flex-wrap: wrap;
+}
+
+.filters,
+.collapse {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  background-color: transparent;
+}
+
+#results-table {
+  border: none;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+/* breathing room under the last row inside the Test Results card */
+#results-table tbody:last-of-type td {
+  border-bottom: none;
+}
+
+#results-table th {
+  padding: 13px 24px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--ink-500);
+  background: #fafbfe;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+#results-table td {
+  padding: 13px 24px;
+  border: none;
+  border-bottom: 1px solid #f1f4f9;
+  transition: var(--transition);
+}
+
+#results-table tr:hover td {
+  background-color: #f8fafd;
+}
+
+/* sortable headers */
+.sortable {
+  cursor: pointer;
+  position: relative;
+  padding-right: 32px;
+}
+
+.sortable:after {
+  content: "";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+}
+
+.sortable.desc:after {
+  border-bottom: 5px solid var(--brand-blue);
+}
+
+.sortable.asc:after {
+  border-top: 5px solid var(--brand-blue);
+}
+
+/* collapsible rows */
+.collapsible {
+  cursor: pointer;
+}
+
+.collapsible td:not(.col-links):hover {
+  background-color: #f3f6fb;
+}
+
+/* result column: center the pill horizontally & vertically */
+#results-table td.col-result {
+  text-align: center;
+  vertical-align: middle;
+}
+
+#results-table th[data-column-type="result"] {
+  text-align: center;
+}
+
+/* result pill */
+.result-pill {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-style: normal;
+  white-space: nowrap;
+}
+
+tbody.passed .col-result .result-pill { background: #e8f9ee; color: var(--c-passed); }
+tbody.failed .col-result .result-pill { background: #fdecec; color: var(--c-failed); }
+tbody.error .col-result .result-pill { background: #fdeaea; color: var(--c-error); }
+tbody.skipped .col-result .result-pill { background: #f0f3f7; color: var(--c-skipped); }
+tbody.xfailed .col-result .result-pill { background: #fdf3e2; color: var(--c-xfailed); }
+tbody.xpassed .col-result .result-pill { background: #f1ecfd; color: var(--c-xpassed); }
+tbody.rerun .col-result .result-pill { background: #e8f0fd; color: var(--c-rerun); }
+tbody.retried .col-result .result-pill { background: #feeee2; color: var(--c-retried); }
+
+.col-testId {
+  word-break: break-all;
+  color: var(--ink-900);
+  font-weight: 500;
+}
+
+.col-duration {
+  color: var(--ink-500);
+  white-space: nowrap;
+}
+
+.col-links {
+  white-space: nowrap;
+}
+
+.col-links__extra {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 3px 10px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--brand-blue);
+  background: #eef3fc;
+  transition: var(--transition);
+}
+
+.col-links__extra:hover {
+  background: #e0eafb;
+  text-decoration: none;
+}
+
+/* legacy result text colors (kept for hooks/custom css) */
+span.passed, .passed .col-result { font-weight: 700; }
+span.failed, span.error { color: var(--c-failed); font-weight: 600; }
+span.skipped { color: var(--c-skipped); font-weight: 600; }
+span.xfailed, span.xpassed { color: var(--c-xfailed); font-weight: 600; }
+span.rerun { color: var(--c-rerun); font-weight: 600; }
+
+/* extras row */
+.extras-row {
+  background-color: #fafbfe;
+}
+
+.extra {
+  padding: 0 !important;
+}
+
+.extraHTML {
+  padding: 16px 24px 0;
+}
+
+/* log console */
+.logwrapper {
+  max-height: 410px;
+  overflow-y: auto;
+  background-color: var(--soft-bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  margin: 16px 24px 20px;
+  position: relative;
+}
+
+.logwrapper.expanded {
+  max-height: none;
+}
+
+.logexpander {
+  position: sticky;
+  bottom: 0;
+  height: 22px;
+  cursor: pointer;
+  background: linear-gradient(to top, rgba(247, 249, 252, 0.95), transparent);
+  text-align: center;
+  z-index: 1;
+}
+
+.logexpander:after {
+  content: "⌄ expand";
+  display: inline-block;
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--ink-400);
+  letter-spacing: 1px;
+}
+
+.logwrapper.expanded .logexpander:after {
+  content: "⌃ collapse";
+}
+
+.log {
+  padding: 16px 18px 22px;
+  font-family: "JetBrains Mono", "Courier New", Courier, monospace;
+  font-size: 12.5px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  color: var(--ink-700);
+  background-color: transparent;
+}
+
+.log .error {
+  color: var(--c-error);
+  font-weight: 600;
+}
+
+/* media viewer */
+.media {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 16px 24px;
+  width: 100%;
+  max-width: 500px;
+  float: right;
+  background: #fff;
+}
+
+.media-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: var(--soft-bg);
+}
+
+.media-container--fullscreen {
+  justify-content: center;
+}
+
+.media-container__nav--left,
+.media-container__nav--right {
+  padding: 6px 12px;
+  cursor: pointer;
+  background-color: #fff;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  transition: var(--transition);
+  color: var(--ink-700);
+}
+
+.media-container__nav--left:hover,
+.media-container__nav--right:hover {
+  background-color: #eef2f8;
+}
+
+.media-container__viewport {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+}
+
+.media-container__viewport img,
+.media-container__viewport video {
+  max-width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.media__name,
+.media__counter {
+  padding: 8px 10px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--ink-500);
+  background-color: var(--soft-bg);
+  border-top: 1px solid var(--line);
+}
+
+/* ================= FILTER SWITCHES ================= */
+.filter-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+  padding: 2px 0;
+}
+
+.filter-switch[data-disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.switch-track {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 17px;
+  border-radius: 9px;
+  background-color: #cbd5e1;
+  transition: background-color 0.25s ease;
+  vertical-align: middle;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.switch-track input[type=checkbox] {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+  margin: 0;
+  z-index: 2;
+}
+
+.switch-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: left 0.25s ease;
+  z-index: 1;
+}
+
+.switch-track input:checked + .switch-thumb {
+  left: 15px;
+}
+
+.switch-label-text {
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.filter-switch--passed .switch-track:has(input:checked) { background-color: var(--c-passed); }
+.filter-switch--passed .switch-label-text { color: var(--c-passed); }
+
+.filter-switch--failed .switch-track:has(input:checked) { background-color: var(--c-failed); }
+.filter-switch--failed .switch-label-text { color: var(--c-failed); }
+
+.filter-switch--error .switch-track:has(input:checked) { background-color: var(--c-error); }
+.filter-switch--error .switch-label-text { color: var(--c-error); }
+
+.filter-switch--skipped .switch-track:has(input:checked) { background-color: var(--c-skipped); }
+.filter-switch--skipped .switch-label-text { color: var(--c-skipped); }
+
+.filter-switch--xfailed .switch-track:has(input:checked) { background-color: var(--c-xfailed); }
+.filter-switch--xfailed .switch-label-text { color: var(--c-xfailed); }
+
+.filter-switch--xpassed .switch-track:has(input:checked) { background-color: var(--c-xpassed); }
+.filter-switch--xpassed .switch-label-text { color: var(--c-xpassed); }
+
+.filter-switch--rerun .switch-track:has(input:checked) { background-color: var(--c-rerun); }
+.filter-switch--rerun .switch-label-text { color: var(--c-rerun); }
+
+.filter-switch--retried .switch-track:has(input:checked) { background-color: var(--c-retried); }
+.filter-switch--retried .switch-label-text { color: var(--c-retried); }
+
+/* action button */
+#toggle_all_details.toggle-details {
+  background-color: var(--brand-blue);
+  color: #fff;
+  border: 1.5px solid var(--brand-blue);
+  padding: 7px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+#toggle_all_details.toggle-details:hover {
+  background-color: var(--x-shade-primary);
+  border-color: var(--x-shade-primary);
+}
+
+#toggle_all_details.toggle-details.expanded {
+  background-color: transparent;
+  color: var(--brand-blue);
+}
+
+#toggle_all_details.toggle-details.expanded:hover {
+  background-color: var(--brand-blue);
+  color: #fff;
+}
+
+/* ================= ADDITIONAL SUMMARY & MISC ================= */
+.additional-summary {
+  margin-bottom: 16px;
+}
+
+.additional-summary:empty {
+  margin-bottom: 0;
+}
+
+p {
+  color: var(--ink-700);
+}
+
+a {
+  color: var(--brand-accent);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+a:hover {
+  color: var(--brand-deep);
+  text-decoration: underline;
+}
+
+#not-found-message td {
+  text-align: center;
+  color: var(--ink-400);
+  padding: 28px;
+}
+
+.container-fluid {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-left: 48px;
+  padding-right: 48px;
+  width: 100%;
+}
+
+.footer-bottom {
+  padding: 18px 0 28px;
+  font-size: 12.5px;
+  color: var(--ink-400);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1200px) {
+  body {
+    min-width: 900px;
+  }
+}
+
+@media (max-width: 992px) {
+  body {
+    min-width: 768px;
+  }
+  .charts-row,
+  .attention-cols {
+    grid-template-columns: 1fr;
+  }
+  .overview-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .report-hero,
+  .body,
+  .container-fluid {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+  </style>
+  
+</head>
+
+<body>
+  
+  
+  
+  
+  
+  
+
+  <!-- ================= HERO HEADER ================= -->
+  <header class="report-hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-eyebrow">TEST EXECUTION REPORT</div>
+        <h1 id="title">report_20261127_095259.html</h1>
+        <div class="hero-sub">Generated on 27-Nov-2026 at 09:53:00 &nbsp;·&nbsp; 14 tests took 554 ms.</div>
+        <div class="summary__reload">
+          <div class="summary__reload__button hidden"
+            onclick="location.reload()">
+            <div>There are still tests running. Reload this page to get the latest results!</div>
+          </div>
+        </div>
+      </div>
+      
+      
+      <div class="hero-ring">
+        <svg viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="46" fill="none" stroke="#dfe5f3" stroke-width="11" />
+          <circle cx="60" cy="60" r="46" fill="none" stroke="#24408c" stroke-width="11"
+            stroke-linecap="round" stroke-dasharray="289.03 289.027"
+            transform="rotate(-90 60 60)" />
+        </svg>
+        <div class="hero-ring-center">
+          <span class="ring-pct">100%</span>
+          <span class="ring-label">EXECUTED</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="body">
+    <!-- ================= ATTENTION BANNER ================= -->
+    <div class="attention-banner">
+      <span class="attention-dot"></span>
+      <span class="attention-title">Attention Required:</span>
+      <span class="attention-text">2 failed or error case(s) need follow-up.</span>
+    </div>
+
+    <div class="additional-summary prefix">
+    </div>
+
+    <!-- ================= PLAN OVERVIEW ================= -->
+    <section class="card">
+      <div class="card-header">
+        <h2>Plan Overview</h2>
+        <span class="card-hint">Execution context</span>
+      </div>
+      <div class="card-body">
+        <div class="overview-grid">
+          <div class="overview-item">
+            <div class="overview-label">Total Cases</div>
+            <div class="overview-value">14</div>
+          </div>
+          <div class="overview-item">
+            <div class="overview-label">Start Time</div>
+            <div class="overview-value overview-value--sm">2026-11-27 09:52:59</div>
+          </div>
+          <div class="overview-item">
+            <div class="overview-label">End Time</div>
+            <div class="overview-value overview-value--sm">2026-11-27 09:53:00</div>
+          </div>
+          <div class="overview-item">
+            <div class="overview-label">Duration</div>
+            <div class="overview-value overview-value--sm">554 ms</div>
+          </div>
+        </div>
+        <div id="environment-card" class="environment-block hidden">
+          <div class="env-title">Environment</div>
+          <div id="environment-grid" class="env-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= EXECUTION SUMMARY ================= -->
+    <section class="card">
+      <div class="card-header">
+        <h2>Execution Summary</h2>
+        <span class="card-hint">Aggregated result distribution</span>
+      </div>
+      <div class="card-body">
+        <div class="metric-grid">
+          <div class="metric-card metric-card--failed">
+            <div class="metric-icon"
+              style="background: #ef44441a; color: #ef4444;">
+              ✕
+            </div>
+            <div class="metric-value">2</div>
+            <div class="metric-label">FAILED</div>
+            <div class="metric-hint">14.3% of total</div>
+          </div>
+          <div class="metric-card metric-card--passed">
+            <div class="metric-icon"
+              style="background: #22c55e1a; color: #22c55e;">
+              ✓
+            </div>
+            <div class="metric-value">12</div>
+            <div class="metric-label">PASSED</div>
+            <div class="metric-hint">85.7% of total</div>
+          </div>
+          <div class="metric-card metric-card--skipped">
+            <div class="metric-icon"
+              style="background: #94a3b81a; color: #94a3b8;">
+              ⏭
+            </div>
+            <div class="metric-value">0</div>
+            <div class="metric-label">SKIPPED</div>
+            <div class="metric-hint">0.0% of total</div>
+          </div>
+          <div class="metric-card metric-card--xfailed">
+            <div class="metric-icon"
+              style="background: #f59e0b1a; color: #f59e0b;">
+              x
+            </div>
+            <div class="metric-value">0</div>
+            <div class="metric-label">EXPECTED FAILURES</div>
+            <div class="metric-hint">0.0% of total</div>
+          </div>
+          <div class="metric-card metric-card--xpassed">
+            <div class="metric-icon"
+              style="background: #8b5cf61a; color: #8b5cf6;">
+              ↑
+            </div>
+            <div class="metric-value">0</div>
+            <div class="metric-label">UNEXPECTED PASSES</div>
+            <div class="metric-hint">0.0% of total</div>
+          </div>
+          <div class="metric-card metric-card--error">
+            <div class="metric-icon"
+              style="background: #dc26261a; color: #dc2626;">
+              !
+            </div>
+            <div class="metric-value">0</div>
+            <div class="metric-label">ERRORS</div>
+            <div class="metric-hint">0.0% of total</div>
+          </div>
+          <div class="metric-card metric-card--rerun">
+            <div class="metric-icon"
+              style="background: #3b82f61a; color: #3b82f6;">
+              ↻
+            </div>
+            <div class="metric-value">0</div>
+            <div class="metric-label">RERUNS</div>
+            <div class="metric-hint">0.0% of total</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CHARTS ================= -->
+    <div class="charts-row">
+      <section class="card chart-card">
+        <div class="card-header">
+          <h2>Test Outcomes</h2>
+          <span class="card-hint">Result distribution by status</span>
+        </div>
+        <div class="card-body chart-body">
+          <div class="donut">
+            <svg viewBox="0 0 160 160">
+              <circle cx="80" cy="80" r="54" fill="none" stroke="#e9edf6" stroke-width="20" />
+              
+              
+              <circle cx="80" cy="80" r="54" fill="none" stroke="#ef4444"
+                stroke-width="20"
+                stroke-dasharray="48.47 339.292"
+                stroke-dashoffset="0.0"
+                transform="rotate(-90 80 80)" />
+              
+              <circle cx="80" cy="80" r="54" fill="none" stroke="#22c55e"
+                stroke-width="20"
+                stroke-dasharray="290.82 339.292"
+                stroke-dashoffset="-48.47"
+                transform="rotate(-90 80 80)" />
+              
+            </svg>
+            <div class="donut-center">
+              <span class="donut-total">14</span>
+              <span class="donut-caption">Total Results</span>
+            </div>
+          </div>
+          <ul class="legend">
+            <li>
+              <span class="legend-dot" style="background: #ef4444;"></span>
+              <span class="legend-name">Failed</span>
+              <span class="legend-count">2</span>
+            </li>
+            <li>
+              <span class="legend-dot" style="background: #22c55e;"></span>
+              <span class="legend-name">Passed</span>
+              <span class="legend-count">12</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section class="card chart-card">
+        <div class="card-header">
+          <h2>Result Distribution</h2>
+          <span class="card-hint">Stacked share of all results</span>
+        </div>
+        <div class="card-body chart-body chart-body--column">
+          <div class="stacked-bar">
+            <div class="stacked-seg" title="Failed: 2"
+              style="width: 14.29%; background: #ef4444;">
+            </div>
+            <div class="stacked-seg" title="Passed: 12"
+              style="width: 85.71%; background: #22c55e;">
+            </div>
+          </div>
+          <div class="rate-grid">
+            <div class="rate-block">
+              <span class="rate-big rate-big--passed">85.7%</span>
+              <span class="rate-desc">Pass rate</span>
+            </div>
+            <div class="rate-block">
+              <span class="rate-big rate-big--failed">14.3%</span>
+              <span class="rate-desc">Failure rate</span>
+            </div>
+            <div class="rate-block">
+              <span class="rate-big rate-big--skipped">0.0%</span>
+              <span class="rate-desc">Skipped rate</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="additional-summary">
+    </div>
+
+    <!-- TEMPLATES -->
+    <template id="template_results-table__body--empty">
+      <tbody class="results-table-row">
+        <tr id="not-found-message">
+          <td colspan="4">No results found. Check the filters.</td>
+        </tr>
+      </tbody>
+    </template>
+    <template id="template_results-table__tbody">
+      <tbody class="results-table-row">
+        <tr class="collapsible">
+        </tr>
+        <tr class="extras-row">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media">
+              <div class="media-container">
+                <div class="media-container__nav--left">&lt;</div>
+                <div class="media-container__viewport">
+                  <img src="" />
+                  <video controls>
+                    <source src="" type="video/mp4">
+                  </video>
+                </div>
+                <div class="media-container__nav--right">&gt;</div>
+              </div>
+              <div class="media__name"></div>
+              <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log"></div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </template>
+    <!-- END TEMPLATES -->
+
+    <!-- ================= RESULTS TABLE ================= -->
+    <section class="card flex-fill">
+      <div class="card-header table-card-head">
+        <h2>Test Results</h2>
+        <span class="card-hint">Click a row to toggle details</span>
+      </div>
+      <div class="summary__spacer">
+        <div class="controls">
+          <div class="filters">
+            <label class="filter-switch filter-switch--failed" >
+              <span class="switch-track">
+                <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="failed"
+                  >
+                <span class="switch-thumb"></span>
+              </span>
+              <span class="switch-label-text">Failed</span>
+            </label>
+            <label class="filter-switch filter-switch--passed" >
+              <span class="switch-track">
+                <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="passed"
+                  >
+                <span class="switch-thumb"></span>
+              </span>
+              <span class="switch-label-text">Passed</span>
+            </label>
+            <label class="filter-switch filter-switch--skipped" data-disabled>
+              <span class="switch-track">
+                <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="skipped"
+                  disabled>
+                <span class="switch-thumb"></span>
+              </span>
+              <span class="switch-label-text">Skipped</span>
+            </label>
+            <label class="filter-switch filter-switch--xfailed" data-disabled>
+              <span class="switch-track">
+                <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="xfailed"
+                  disabled>
+                <span class="switch-thumb"></span>
+              </span>
+              <span class="switch-label-text">Expected failures</span>
+            </label>
+            <label class="filter-switch filter-switch--xpassed" data-disabled>
+              <span class="switch-track">
+                <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="xpassed"
+                  disabled>
+                <span class="switch-thumb"></span>
+              </span>
+              <span class="switch-label-text">Unexpected passes</span>
+            </label>
+            <label class="filter-switch filter-switch--error" data-disabled>
+              <span class="switch-track">
+                <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="error"
+                  disabled>
+                <span class="switch-thumb"></span>
+              </span>
+              <span class="switch-label-text">Errors</span>
+            </label>
+            <label class="filter-switch filter-switch--rerun" data-disabled>
+              <span class="switch-track">
+                <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="rerun"
+                  disabled>
+                <span class="switch-thumb"></span>
+              </span>
+              <span class="switch-label-text">Reruns</span>
+            </label>
+            <label class="filter-switch filter-switch--retried" data-disabled>
+              <span class="switch-track">
+                <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="retried"
+                  disabled>
+                <span class="switch-thumb"></span>
+              </span>
+              <span class="switch-label-text">Retried</span>
+            </label>
+          </div>
+          <div class="collapse">
+            <button class="toggle-details" id="toggle_all_details">Show details</button>
+          </div>
+        </div>
+      </div>
+      <table id="results-table">
+        <thead id="results-table-head">
+          <tr>
+            <th class="sortable" data-column-type="result">Result</th>
+            <th class="sortable" data-column-type="testId">Test</th>
+            <th class="sortable" data-column-type="duration">Duration</th>
+            <th>Links</th>
+          </tr>
+        </thead>
+      </table>
+    </section>
+
+    <div class="additional-summary postfix">
+    </div>
+  </main>
+
+  <footer>
+    <div id="data-container" data-jsonblob="{&#34;environment&#34;: {&#34;Python&#34;: &#34;3.15.2&#34;, &#34;Platform&#34;: &#34;Windows-10-10.0.19045-SP0&#34;, &#34;Packages&#34;: {&#34;pytest&#34;: &#34;9.2.0&#34;, &#34;pluggy&#34;: &#34;1.7.0&#34;}, &#34;Plugins&#34;: {&#34;metadata&#34;: &#34;3.1.1&#34;, &#34;xhtml&#34;: &#34;0.6.1&#34;}, &#34;JAVA_HOME&#34;: &#34;C:\\Program Files\\Java\\jdk1.8.0_131&#34;}, &#34;tests&#34;: {&#34;Learn/test_demo01.py::TestDemo::test_method_1&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Learn/test_demo01.py::TestDemo::test_method_1&#34;, &#34;duration&#34;: &#34;1 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;&lt;span class=\&#34;result-pill\&#34;&gt;Passed&lt;/span&gt;&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Learn/test_demo01.py::TestDemo::test_method_1&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;1 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;No log output captured.&#34;}], &#34;Learn/test_demo01.py::TestDemo::test_method_2&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Learn/test_demo01.py::TestDemo::test_method_2&#34;, &#34;duration&#34;: &#34;1 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;&lt;span class=\&#34;result-pill\&#34;&gt;Passed&lt;/span&gt;&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Learn/test_demo01.py::TestDemo::test_method_2&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;1 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;No log output captured.&#34;}], &#34;Learn/test_demo02.py::TestDemo_02::test_method_2_1&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Learn/test_demo02.py::TestDemo_02::test_method_2_1&#34;, &#34;duration&#34;: &#34;1 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;&lt;span class=\&#34;result-pill\&#34;&gt;Passed&lt;/span&gt;&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Learn/test_demo02.py::TestDemo_02::test_method_2_1&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;1 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;No log output captured.&#34;}], &#34;Learn/test_demo02.py::TestDemo_02::test_method_2_2&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Learn/test_demo02.py::TestDemo_02::test_method_2_2&#34;, &#34;duration&#34;: &#34;1 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;&lt;span class=\&#34;result-pill\&#34;&gt;Passed&lt;/span&gt;&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Learn/test_demo02.py::TestDemo_02::test_method_2_2&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;1 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;No log output captured.&#34;}], &#34;Learn/test_demo_add.py::TestAdd::test_add_1[1-10-10]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Failed&#34;, &#34;testId&#34;: &#34;Learn/test_demo_add.py::TestAdd::test_add_1[1-10-10]&#34;, &#34;duration&#34;: &#34;3 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;&lt;span class=\&#34;result-pill\&#34;&gt;Failed&lt;/span&gt;&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Learn/test_demo_add.py::TestAdd::test_add_1[1-10-10]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;3 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;self = &amp;lt;Learn.test_demo_add.TestAdd object at 0x000002704654CA50&amp;gt;, a = 1, b = 10\nexpect = 10\n\n    @pytest.mark.parametrize(&amp;quot;a,b,expect&amp;quot;,data_list)\n    def test_add_1(self,a,b, expect):\n        print(f&amp;#x27;\u52a0\u6cd5\uff1a{a},{b},\u9884\u671f\u7ed3\u679c\u4e3a\uff1a{expect}&amp;#x27;)\n        #\u65ad\u8a00\n&amp;gt;       assert expect == add(a, b)\nE       assert 10 == 11\nE        +  where 11 = add(1, 10)\n\nLearn\\test_demo_add.py:12: AssertionError\n&#34;}], &#34;Learn/test_demo_add.py::TestAdd::test_add_1[1-5-6]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Learn/test_demo_add.py::TestAdd::test_add_1[1-5-6]&#34;, &#34;duration&#34;: &#34;1 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;&lt;span class=\&#34;result-pill\&#34;&gt;Passed&lt;/span&gt;&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Learn/test_demo_add.py::TestAdd::test_add_1[1-5-6]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;1 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;No log output captured.&#34;}], &#34;Learn/test_demo_add.py::TestAdd::test_add_1[9-7-16]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Learn/test_demo_add.py::TestAdd::test_add_1[9-7-16]&#34;, &#34;duration&#34;: &#34;1 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;&lt;span class=\&#34;result-pill\&#34;&gt;Passed&lt;/span&gt;&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Learn/test_demo_add.py::TestAdd::test_add_1[9-7-16]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;1 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;No log output captured.&#34;}], &#34;Learn/test_demo_add2.py::TestAdd::test_add_1[1-10-10]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Failed&#34;, &#34;testId&#34;: &#34;Learn/test_demo_add2.py::TestAdd::test_add_1[1-10-10]&#34;, &#34;duration&#34;: &#34;1 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;&lt;span class=\&#34;result-pill\&#34;&gt;Failed&lt;/span&gt;&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Learn/test_demo_add2.py::TestAdd::test_add_1[1-10-10]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;1 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;self = &amp;lt;Learn.test_demo_add2.TestAdd object at 0x000002704654CE10&amp;gt;, a = 1\nb = 10, expect = 10\n\n    @pytest.mark.parametrize(&amp;quot;a,b,expect&amp;quot;,build_data())\n    def test_add_1(self, a, b, expect):\n        print(f&amp;#x27;\u52a0\u6cd5\uff1a{a},{b},\u9884\u671f\u7ed3\u679c\u4e3a\uff1a{expect}&amp;#x27;)\n        #\u65ad\u8a00\n&amp;gt;       assert expect == add(a, b)\nE       assert 10 == 11\nE        +  where 11 = add(1, 10)\n\nLearn\\test_demo_add2.py:12: AssertionError\n&#34;}], &#34;Learn/test_demo_add2.py::TestAdd::test_add_1[1-5-6]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Learn/test_demo_add2.py::TestAdd::test_add_1[1-5-6]&#34;, &#34;duration&#34;: &#34;1 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;&lt;span class=\&#34;result-pill\&#34;&gt;Passed&lt;/span&gt;&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Learn/test_demo_add2.py::TestAdd::test_add_1[1-5-6]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;1 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;No log output captured.&#34;}], &#34;Learn/test_demo_add2.py::TestAdd::test_add_1[9-7-16]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Learn/test_demo_add2.py::TestAdd::test_add_1[9-7-16]&#34;, &#34;duration&#34;: &#34;1 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;&lt;span class=\&#34;result-pill\&#34;&gt;Passed&lt;/span&gt;&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Learn/test_demo_add2.py::TestAdd::test_add_1[9-7-16]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;1 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;No log output captured.&#34;}], &#34;script/test_login.py::TestLogin::test_username_password_ok[admin-123456-\\u767b\\u5f55\\u6210\\u529f]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;script/test_login.py::TestLogin::test_username_password_ok[admin-123456-\\u767b\\u5f55\\u6210\\u529f]&#34;, &#34;duration&#34;: &#34;2 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;&lt;span class=\&#34;result-pill\&#34;&gt;Passed&lt;/span&gt;&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;script/test_login.py::TestLogin::test_username_password_ok[admin-123456-\\u767b\\u5f55\\u6210\\u529f]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;2 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;No log output captured.&#34;}], &#34;script/test_login.py::TestLogin::test_username_password_ok[root-123456-\\u767b\\u5f55\\u5931\\u8d25]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;script/test_login.py::TestLogin::test_username_password_ok[root-123456-\\u767b\\u5f55\\u5931\\u8d25]&#34;, &#34;duration&#34;: &#34;1 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;&lt;span class=\&#34;result-pill\&#34;&gt;Passed&lt;/span&gt;&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;script/test_login.py::TestLogin::test_username_password_ok[root-123456-\\u767b\\u5f55\\u5931\\u8d25]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;1 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;No log output captured.&#34;}], &#34;script/test_login.py::TestLogin::test_username_password_ok[admin-1234567-\\u767b\\u5f55\\u5931\\u8d25]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;script/test_login.py::TestLogin::test_username_password_ok[admin-1234567-\\u767b\\u5f55\\u5931\\u8d25]&#34;, &#34;duration&#34;: &#34;1 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;&lt;span class=\&#34;result-pill\&#34;&gt;Passed&lt;/span&gt;&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;script/test_login.py::TestLogin::test_username_password_ok[admin-1234567-\\u767b\\u5f55\\u5931\\u8d25]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;1 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;No log output captured.&#34;}], &#34;script/test_login.py::TestLogin::test_username_password_ok[root-1234567-\\u767b\\u5f55\\u5931\\u8d25]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;script/test_login.py::TestLogin::test_username_password_ok[root-1234567-\\u767b\\u5f55\\u5931\\u8d25]&#34;, &#34;duration&#34;: &#34;1 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;&lt;span class=\&#34;result-pill\&#34;&gt;Passed&lt;/span&gt;&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;script/test_login.py::TestLogin::test_username_password_ok[root-1234567-\\u767b\\u5f55\\u5931\\u8d25]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;1 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;No log output captured.&#34;}]}, &#34;renderCollapsed&#34;: [&#34;passed&#34;], &#34;initialSort&#34;: &#34;result&#34;, &#34;title&#34;: &#34;report_20261127_095259.html&#34;}"></div>
+    <script>
+      (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+const { getCollapsedCategory, setCollapsedIds } = require('./storage.js')
+
+class DataManager {
+    setManager(data) {
+        const collapsedCategories = [...getCollapsedCategory(data.renderCollapsed)]
+        const collapsedIds = []
+        const tests = Object.values(data.tests).flat().map((test, index) => {
+            const collapsed = collapsedCategories.includes(test.result.toLowerCase())
+            const id = `test_${index}`
+            if (collapsed) {
+                collapsedIds.push(id)
+            }
+            return {
+                ...test,
+                id,
+                collapsed,
+            }
+        })
+        const dataBlob = { ...data, tests }
+        this.data = { ...dataBlob }
+        this.renderData = { ...dataBlob }
+        setCollapsedIds(collapsedIds)
+    }
+
+    get allData() {
+        return { ...this.data }
+    }
+
+    resetRender() {
+        this.renderData = { ...this.data }
+    }
+
+    setRender(data) {
+        this.renderData.tests = [...data]
+    }
+
+    toggleCollapsedItem(id) {
+        this.renderData.tests = this.renderData.tests.map((test) =>
+            test.id === id ? { ...test, collapsed: !test.collapsed } : test,
+        )
+    }
+
+    set allCollapsed(collapsed) {
+        this.renderData = { ...this.renderData, tests: [...this.renderData.tests.map((test) => (
+            { ...test, collapsed }
+        ))] }
+    }
+
+    get testSubset() {
+        return [...this.renderData.tests]
+    }
+
+    get environment() {
+        return this.renderData.environment
+    }
+
+    get initialSort() {
+        return this.data.initialSort
+    }
+}
+
+module.exports = {
+    manager: new DataManager(),
+}
+
+},{"./storage.js":8}],2:[function(require,module,exports){
+const mediaViewer = require('./mediaviewer.js')
+const templateResult = document.getElementById('template_results-table__tbody')
+
+function htmlToElements(html) {
+    const temp = document.createElement('template')
+    temp.innerHTML = html
+    return temp.content.childNodes
+}
+
+const find = (selector, elem) => {
+    if (!elem) {
+        elem = document
+    }
+    return elem.querySelector(selector)
+}
+
+const findAll = (selector, elem) => {
+    if (!elem) {
+        elem = document
+    }
+    return [...elem.querySelectorAll(selector)]
+}
+
+const dom = {
+    getResultTBody: ({ testId, id, log, extras, resultsTableRow, tableHtml, result, collapsed }) => {
+        const resultBody = templateResult.content.cloneNode(true)
+        resultBody.querySelector('tbody').classList.add(result.toLowerCase())
+        resultBody.querySelector('tbody').id = testId
+        resultBody.querySelector('.collapsible').dataset.id = id
+
+        resultsTableRow.forEach((html) => {
+            const t = document.createElement('template')
+            t.innerHTML = html
+            resultBody.querySelector('.collapsible').appendChild(t.content)
+        })
+
+        if (log) {
+            // Wrap lines starting with "E" with span.error to color those lines red
+            const wrappedLog = log.replace(/^E.*$/gm, (match) => `<span class="error">${match}</span>`)
+            resultBody.querySelector('.log').innerHTML = wrappedLog
+        } else {
+            resultBody.querySelector('.log').remove()
+        }
+
+        if (collapsed) {
+            resultBody.querySelector('.collapsible > .col-result')?.classList.add('collapsed')
+            resultBody.querySelector('.extras-row').classList.add('hidden')
+        } else {
+            resultBody.querySelector('.collapsible > .col-result')?.classList.remove('collapsed')
+        }
+
+        const media = []
+        extras?.forEach(({ name, format_type, content }) => {
+            if (['image', 'video'].includes(format_type)) {
+                media.push({ path: content, name, format_type })
+            }
+
+            if (format_type === 'html') {
+                resultBody.querySelector('.extraHTML').insertAdjacentHTML('beforeend', `<div>${content}</div>`)
+            }
+        })
+        mediaViewer.setup(resultBody, media)
+
+        // Add custom html from the pytest_xhtml_results_table_html hook
+        tableHtml?.forEach((item) => {
+            resultBody.querySelector('td[class="extra"]').insertAdjacentHTML('beforeend', item)
+        })
+
+        return resultBody
+    },
+}
+
+module.exports = {
+    dom,
+    htmlToElements,
+    find,
+    findAll,
+}
+
+},{"./mediaviewer.js":6}],3:[function(require,module,exports){
+const { manager } = require('./datamanager.js')
+const { doSort } = require('./sort.js')
+const storageModule = require('./storage.js')
+
+const getFilteredSubSet = (filter) =>
+    manager.allData.tests.filter(({ result }) => filter.includes(result.toLowerCase()))
+
+const doInitFilter = () => {
+    const currentFilter = storageModule.getVisible()
+    const filteredSubset = getFilteredSubSet(currentFilter)
+    manager.setRender(filteredSubset)
+}
+
+const doFilter = (type, show) => {
+    if (show) {
+        storageModule.showCategory(type)
+    } else {
+        storageModule.hideCategory(type)
+    }
+
+    const currentFilter = storageModule.getVisible()
+    const filteredSubset = getFilteredSubSet(currentFilter)
+    manager.setRender(filteredSubset)
+
+    const sortColumn = storageModule.getSort()
+    doSort(sortColumn, true)
+}
+
+module.exports = {
+    doFilter,
+    doInitFilter,
+}
+
+},{"./datamanager.js":1,"./sort.js":7,"./storage.js":8}],4:[function(require,module,exports){
+const { redraw, bindEvents, renderStatic } = require('./main.js')
+const { doInitFilter } = require('./filter.js')
+const { doInitSort } = require('./sort.js')
+const { manager } = require('./datamanager.js')
+const data = JSON.parse(document.getElementById('data-container').dataset.jsonblob)
+
+function init() {
+    manager.setManager(data)
+    doInitFilter()
+    doInitSort()
+    renderStatic()
+    redraw()
+    bindEvents()
+}
+
+init()
+
+},{"./datamanager.js":1,"./filter.js":3,"./main.js":5,"./sort.js":7}],5:[function(require,module,exports){
+const { dom, find, findAll } = require('./dom.js')
+const { manager } = require('./datamanager.js')
+const { doSort } = require('./sort.js')
+const { doFilter } = require('./filter.js')
+const {
+    getVisible,
+    getCollapsedIds,
+    setCollapsedIds,
+    getSort,
+    getSortDirection,
+    possibleFilters,
+} = require('./storage.js')
+
+const removeChildren = (node) => {
+    while (node.firstChild) {
+        node.removeChild(node.firstChild)
+    }
+}
+
+const renderStatic = () => {
+}
+
+const addItemToggleListener = (elem) => {
+    elem.addEventListener('click', ({ target }) => {
+        const id = target.parentElement.dataset.id
+        manager.toggleCollapsedItem(id)
+
+        const collapsedIds = getCollapsedIds()
+        if (collapsedIds.includes(id)) {
+            const updated = collapsedIds.filter((item) => item !== id)
+            setCollapsedIds(updated)
+        } else {
+            collapsedIds.push(id)
+            setCollapsedIds(collapsedIds)
+        }
+        redraw()
+    })
+}
+
+const renderContent = (tests) => {
+    const sortAttr = getSort(manager.initialSort)
+    const sortAsc = JSON.parse(getSortDirection())
+    const rows = tests.map(dom.getResultTBody)
+    const table = document.getElementById('results-table')
+    const tableHeader = document.getElementById('results-table-head')
+
+    const newTable = document.createElement('table')
+    newTable.id = 'results-table'
+
+    // remove all sorting classes and set the relevant
+    findAll('.sortable', tableHeader).forEach((elem) => elem.classList.remove('asc', 'desc'))
+    tableHeader.querySelector(`.sortable[data-column-type="${sortAttr}"]`)?.classList.add(sortAsc ? 'desc' : 'asc')
+    newTable.appendChild(tableHeader)
+
+    if (!rows.length) {
+        const emptyTable = document.getElementById('template_results-table__body--empty').content.cloneNode(true)
+        newTable.appendChild(emptyTable)
+    } else {
+        rows.forEach((row) => {
+            if (!!row) {
+                findAll('.collapsible td:not(.col-links', row).forEach(addItemToggleListener)
+                find('.logexpander', row).addEventListener('click',
+                    (evt) => evt.target.parentNode.classList.toggle('expanded'),
+                )
+                newTable.appendChild(row)
+            }
+        })
+    }
+
+    table.replaceWith(newTable)
+}
+
+const renderDerived = () => {
+    const currentFilter = getVisible()
+    possibleFilters.forEach((result) => {
+        const input = document.querySelector(`input[data-test-result="${result}"]`)
+        input.checked = currentFilter.includes(result)
+    })
+}
+
+const bindEvents = () => {
+    const filterColumn = (evt) => {
+        const { target: element } = evt
+        const { testResult } = element.dataset
+
+        doFilter(testResult, element.checked)
+        const collapsedIds = getCollapsedIds()
+        const updated = manager.renderData.tests.map((test) => {
+            return {
+                ...test,
+                collapsed: collapsedIds.includes(test.id),
+            }
+        })
+        manager.setRender(updated)
+        redraw()
+    }
+
+    findAll('input[name="filter_checkbox"]').forEach((elem) => {
+        elem.addEventListener('click', filterColumn)
+    })
+
+    findAll('.sortable').forEach((elem) => {
+        elem.addEventListener('click', (evt) => {
+            const { target: element } = evt
+            const { columnType } = element.dataset
+            doSort(columnType)
+            redraw()
+        })
+    })
+
+    const toggleBtn = document.getElementById('toggle_all_details')
+    let detailsExpanded = false
+    toggleBtn.addEventListener('click', () => {
+        detailsExpanded = !detailsExpanded
+        if (detailsExpanded) {
+            manager.allCollapsed = false
+            setCollapsedIds([])
+            toggleBtn.textContent = 'Show summary'
+            toggleBtn.classList.add('expanded')
+        } else {
+            manager.allCollapsed = true
+            const allIds = manager.renderData.tests.map((test) => test.id)
+            setCollapsedIds(allIds)
+            toggleBtn.textContent = 'Show details'
+            toggleBtn.classList.remove('expanded')
+        }
+        redraw()
+    })
+}
+
+const redraw = () => {
+    const { testSubset } = manager
+
+    renderContent(testSubset)
+    renderDerived()
+}
+
+module.exports = {
+    redraw,
+    bindEvents,
+    renderStatic,
+}
+
+},{"./datamanager.js":1,"./dom.js":2,"./filter.js":3,"./sort.js":7,"./storage.js":8}],6:[function(require,module,exports){
+class MediaViewer {
+    constructor(assets) {
+        this.assets = assets
+        this.index = 0
+    }
+
+    nextActive() {
+        this.index = this.index === this.assets.length - 1 ? 0 : this.index + 1
+        return [this.activeFile, this.index]
+    }
+
+    prevActive() {
+        this.index = this.index === 0 ? this.assets.length - 1 : this.index -1
+        return [this.activeFile, this.index]
+    }
+
+    get currentIndex() {
+        return this.index
+    }
+
+    get activeFile() {
+        return this.assets[this.index]
+    }
+}
+
+
+const setup = (resultBody, assets) => {
+    if (!assets.length) {
+        resultBody.querySelector('.media').classList.add('hidden')
+        return
+    }
+
+    const mediaViewer = new MediaViewer(assets)
+    const container = resultBody.querySelector('.media-container')
+    const leftArrow = resultBody.querySelector('.media-container__nav--left')
+    const rightArrow = resultBody.querySelector('.media-container__nav--right')
+    const mediaName = resultBody.querySelector('.media__name')
+    const counter = resultBody.querySelector('.media__counter')
+    const imageEl = resultBody.querySelector('img')
+    const sourceEl = resultBody.querySelector('source')
+    const videoEl = resultBody.querySelector('video')
+
+    const setImg = (media, index) => {
+        if (media?.format_type === 'image') {
+            imageEl.src = media.path
+
+            imageEl.classList.remove('hidden')
+            videoEl.classList.add('hidden')
+        } else if (media?.format_type === 'video') {
+            sourceEl.src = media.path
+
+            videoEl.classList.remove('hidden')
+            imageEl.classList.add('hidden')
+        }
+
+        mediaName.innerText = media?.name
+        counter.innerText = `${index + 1} / ${assets.length}`
+    }
+    setImg(mediaViewer.activeFile, mediaViewer.currentIndex)
+
+    const moveLeft = () => {
+        const [media, index] = mediaViewer.prevActive()
+        setImg(media, index)
+    }
+    const doRight = () => {
+        const [media, index] = mediaViewer.nextActive()
+        setImg(media, index)
+    }
+    const openImg = () => {
+        window.open(mediaViewer.activeFile.path, '_blank')
+    }
+    if (assets.length === 1) {
+        container.classList.add('media-container--fullscreen')
+    } else {
+        leftArrow.addEventListener('click', moveLeft)
+        rightArrow.addEventListener('click', doRight)
+    }
+    imageEl.addEventListener('click', openImg)
+}
+
+module.exports = {
+    setup,
+}
+
+},{}],7:[function(require,module,exports){
+const { manager } = require('./datamanager.js')
+const storageModule = require('./storage.js')
+
+const genericSort = (list, key, ascending, customOrder) => {
+    let sorted
+    if (customOrder) {
+        sorted = list.sort((a, b) => {
+            const aValue = a.result.toLowerCase()
+            const bValue = b.result.toLowerCase()
+
+            const aIndex = customOrder.findIndex((item) => item.toLowerCase() === aValue)
+            const bIndex = customOrder.findIndex((item) => item.toLowerCase() === bValue)
+
+            // Compare the indices to determine the sort order
+            return aIndex - bIndex
+        })
+    } else {
+        sorted = list.sort((a, b) => a[key] === b[key] ? 0 : a[key] > b[key] ? 1 : -1)
+    }
+
+    if (ascending) {
+        sorted.reverse()
+    }
+    return sorted
+}
+
+const durationSort = (list, ascending) => {
+    const parseDuration = (duration) => {
+        if (duration.includes(':')) {
+            // If it's in the format "HH:mm:ss"
+            const [hours, minutes, seconds] = duration.split(':').map(Number)
+            return (hours * 3600 + minutes * 60 + seconds) * 1000
+        } else {
+            // If it's in the format "nnn ms"
+            return parseInt(duration)
+        }
+    }
+    const sorted = list.sort((a, b) => parseDuration(a['duration']) - parseDuration(b['duration']))
+    if (ascending) {
+        sorted.reverse()
+    }
+    return sorted
+}
+
+const doInitSort = () => {
+    const type = storageModule.getSort(manager.initialSort)
+    const ascending = storageModule.getSortDirection()
+    const list = manager.testSubset
+    const initialOrder = ['Error', 'Failed', 'Rerun', 'XFailed', 'XPassed', 'Skipped', 'Passed']
+
+    storageModule.setSort(type)
+    storageModule.setSortDirection(ascending)
+
+    if (type?.toLowerCase() === 'original') {
+        manager.setRender(list)
+    } else {
+        let sortedList
+        switch (type) {
+        case 'duration':
+            sortedList = durationSort(list, ascending)
+            break
+        case 'result':
+            sortedList = genericSort(list, type, ascending, initialOrder)
+            break
+        default:
+            sortedList = genericSort(list, type, ascending)
+            break
+        }
+        manager.setRender(sortedList)
+    }
+}
+
+const doSort = (type, skipDirection) => {
+    const newSortType = storageModule.getSort(manager.initialSort) !== type
+    const currentAsc = storageModule.getSortDirection()
+    let ascending
+    if (skipDirection) {
+        ascending = currentAsc
+    } else {
+        ascending = newSortType ? false : !currentAsc
+    }
+    storageModule.setSort(type)
+    storageModule.setSortDirection(ascending)
+
+    const list = manager.testSubset
+    const sortedList = type === 'duration' ? durationSort(list, ascending) : genericSort(list, type, ascending)
+    manager.setRender(sortedList)
+}
+
+module.exports = {
+    doInitSort,
+    doSort,
+}
+
+},{"./datamanager.js":1,"./storage.js":8}],8:[function(require,module,exports){
+const possibleFilters = [
+    'passed',
+    'skipped',
+    'failed',
+    'error',
+    'xfailed',
+    'xpassed',
+    'rerun',
+]
+
+const getVisible = () => {
+    const url = new URL(window.location.href)
+    const settings = new URLSearchParams(url.search).get('visible')
+    const lower = (item) => {
+        const lowerItem = item.toLowerCase()
+        if (possibleFilters.includes(lowerItem)) {
+            return lowerItem
+        }
+        return null
+    }
+    return settings === null ?
+        possibleFilters :
+        [...new Set(settings?.split(',').map(lower).filter((item) => item))]
+}
+
+const hideCategory = (categoryToHide) => {
+    const url = new URL(window.location.href)
+    const visibleParams = new URLSearchParams(url.search).get('visible')
+    const currentVisible = visibleParams ? visibleParams.split(',') : [...possibleFilters]
+    const settings = [...new Set(currentVisible)].filter((f) => f !== categoryToHide).join(',')
+
+    url.searchParams.set('visible', settings)
+    window.history.pushState({}, null, unescape(url.href))
+}
+
+const showCategory = (categoryToShow) => {
+    if (typeof window === 'undefined') {
+        return
+    }
+    const url = new URL(window.location.href)
+    const currentVisible = new URLSearchParams(url.search).get('visible')?.split(',').filter(Boolean) ||
+        [...possibleFilters]
+    const settings = [...new Set([categoryToShow, ...currentVisible])]
+    const noFilter = possibleFilters.length === settings.length || !settings.length
+
+    noFilter ? url.searchParams.delete('visible') : url.searchParams.set('visible', settings.join(','))
+    window.history.pushState({}, null, unescape(url.href))
+}
+
+const getSort = (initialSort) => {
+    const url = new URL(window.location.href)
+    let sort = new URLSearchParams(url.search).get('sort')
+    if (!sort) {
+        sort = initialSort || 'result'
+    }
+    return sort
+}
+
+const setSort = (type) => {
+    const url = new URL(window.location.href)
+    url.searchParams.set('sort', type)
+    window.history.pushState({}, null, unescape(url.href))
+}
+
+const getCollapsedCategory = (renderCollapsed) => {
+    let categories
+    if (typeof window !== 'undefined') {
+        const url = new URL(window.location.href)
+        const collapsedItems = new URLSearchParams(url.search).get('collapsed')
+        switch (true) {
+        case !renderCollapsed && collapsedItems === null:
+            categories = ['passed']
+            break
+        case collapsedItems?.length === 0 || /^["']{2}$/.test(collapsedItems):
+            categories = []
+            break
+        case /^all$/.test(collapsedItems) || collapsedItems === null && /^all$/.test(renderCollapsed):
+            categories = [...possibleFilters]
+            break
+        default:
+            categories = collapsedItems?.split(',').map((item) => item.toLowerCase()) || renderCollapsed
+            break
+        }
+    } else {
+        categories = []
+    }
+    return categories
+}
+
+const getSortDirection = () => JSON.parse(sessionStorage.getItem('sortAsc')) || false
+const setSortDirection = (ascending) => sessionStorage.setItem('sortAsc', ascending)
+
+const getCollapsedIds = () => JSON.parse(sessionStorage.getItem('collapsedIds')) || []
+const setCollapsedIds = (list) => sessionStorage.setItem('collapsedIds', JSON.stringify(list))
+
+module.exports = {
+    getVisible,
+    hideCategory,
+    showCategory,
+    getCollapsedIds,
+    setCollapsedIds,
+    getSort,
+    setSort,
+    getSortDirection,
+    setSortDirection,
+    getCollapsedCategory,
+    possibleFilters,
+}
+
+},{}]},{},[4]);
+    </script>
+    <script>
+      // ---- SaaS dashboard enhancements: environment grid ----
+      (function () {
+        var data = JSON.parse(document.getElementById('data-container').dataset.jsonblob);
+
+        // Environment grid (Plan Overview)
+        function formatEnvValue(value) {
+          if (value === null || value === undefined) {
+            return '';
+          }
+          if (Array.isArray(value)) {
+            return value.map(formatEnvValue).join(', ');
+          }
+          if (typeof value === 'object') {
+            // {name, version} item from older pytest-metadata versions
+            if ('name' in value) {
+              return [value.name, value.version].filter(Boolean).join(' ');
+            }
+            // {name: version, ...} mapping, e.g. Packages / Plugins
+            return Object.keys(value).map(function (key) {
+              return key + ' ' + formatEnvValue(value[key]);
+            }).join(', ');
+          }
+          return String(value);
+        }
+
+        // {name: version, ...} mappings (Packages / Plugins) render as chips
+        function isEnvMapping(value) {
+          return value !== null && typeof value === 'object' &&
+            !Array.isArray(value) && !('name' in value) &&
+            Object.keys(value).length > 0;
+        }
+
+        var envGrid = document.getElementById('environment-grid');
+        var envCard = document.getElementById('environment-card');
+        var env = data.environment || {};
+        var envEntries = Object.keys(env);
+        if (envGrid && envCard && envEntries.length) {
+          envEntries.forEach(function (key) {
+            var value = env[key];
+            var item = document.createElement('div');
+            item.className = 'env-item';
+            var k = document.createElement('div');
+            k.className = 'env-key';
+            k.textContent = key;
+            item.appendChild(k);
+            if (isEnvMapping(value)) {
+              item.classList.add('env-item--chips');
+              var chips = document.createElement('div');
+              chips.className = 'env-chips';
+              Object.keys(value).forEach(function (name) {
+                var chip = document.createElement('span');
+                chip.className = 'env-chip';
+                chip.textContent = name;
+                var ver = document.createElement('span');
+                ver.className = 'env-chip__ver';
+                ver.textContent = formatEnvValue(value[name]);
+                chip.appendChild(ver);
+                chips.appendChild(chip);
+              });
+              item.appendChild(chips);
+            } else {
+              var v = document.createElement('div');
+              v.className = 'env-val';
+              v.textContent = formatEnvValue(value);
+              item.appendChild(v);
+            }
+            envGrid.appendChild(item);
+          });
+          envCard.classList.remove('hidden');
+        }
+      })();
+    </script>
+  </footer>
+  <footer class="footer-bottom">
+    <div class="container-fluid">
+      <p>Report generated on 27-Nov-2026 at 09:53:00 by <a
+          href="https://github.com/SeldomQA/pytest-xhtml">pytest-xhtml</a>
+        v0.6.1</p>
+    </div>
+  </footer>
+</body>
+
+</html>

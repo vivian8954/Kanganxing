@@ -1,0 +1,32 @@
+[
+  {
+    "name": "John",
+    "age": 30,
+    "city": "New York",
+    "country": "USA",
+    "isStudent": true,
+    "hobbies": ["reading", "gaming", "coding"],
+    "address": {
+      "street": "123 Main St",
+      "suite": "Apt 4B",
+      "city": "New York",
+      "state": "NY",
+      "zip": "10001"
+    }
+  },
+  {
+    "name": "Lucy",
+    "age": 24,
+    "city": "南京",
+    "country": "China",
+    "isStudent": false,
+    "hobbies": ["singing", "gaming", "coding"],
+    "address": {
+      "street": "南京大道 123 ",
+      "suite": "6-602",
+      "city": "南京",
+      "state": "ZJ",
+      "zip": "21001"
+    }
+  }
+]
